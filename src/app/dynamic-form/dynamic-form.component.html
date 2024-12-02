@@ -1,0 +1,187 @@
+<form [formGroup]="dynamicForm" (ngSubmit)="submitForm()">
+  <div class="m-5">
+    <div class="border border-gray-900/10 p-12">
+      <h2 class="text-base/7 font-semibold text-gray-900">Dynamic Form</h2>
+      <p class="mt-1 text-sm/6 text-gray-600">
+        This form will allow you to add additional form rows.
+      </p>
+
+      <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div class="sm:col-span-4">
+          <label for="name" class="block text-sm/6 font-medium text-gray-900"
+            >Name</label
+          >
+          <div class="mt-2">
+            <div
+              class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
+            >
+              <input
+                formControlName="name"
+                type="text"
+                name="name"
+                id="name"
+                class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+                placeholder="Sonu Kapoor"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="sm:col-span-4">
+          <label for="name" class="block text-sm/6 font-medium text-gray-900"
+            >Email</label
+          >
+          <div class="mt-2">
+            <div
+              class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
+            >
+              <input
+                formControlName="email"
+                type="text"
+                name="email"
+                id="email"
+                class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+                placeholder="sonu@example.com"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 grid grid-cols-3 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <ng-container formArrayName="fields">
+          @for(field of fields.controls; let i = $index; track field) {
+          <ng-container [formGroupName]="i">
+            <div class="sm:col-span-2">
+              <label
+                for="label"
+                class="block text-sm/6 font-medium text-gray-900"
+                >Label</label
+              >
+              <div class="mt-2">
+                <div
+                  class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
+                >
+                  <input
+                    formControlName="label"
+                    type="text"
+                    name="label"
+                    id="label"
+                    class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="sm:col-span-2">
+              <label
+                for="value"
+                class="block text-sm/6 font-medium text-gray-900"
+                >Value</label
+              >
+              <div class="mt-2">
+                <div
+                  class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
+                >
+                  <input
+                    formControlName="value"
+                    type="text"
+                    name="value"
+                    id="value"
+                    class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+                  />
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <div class="sm:col-span-2 flex items-end">
+            <button
+              type="button"
+              (click)="removeField(i)"
+              class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Remove
+            </button>
+          </div>
+          }
+        </ng-container>
+      </div>
+
+      <button
+        type="button"
+        (click)="addField()"
+        class="rounded-md bg-indigo-600 mt-3 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        Add Field
+      </button>
+
+      <div class="mt-6 flex items-center justify-end gap-x-6">
+        <button type="button" class="text-sm/6 font-semibold text-gray-900">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- <h1 class="text-3xl font-bold underline">Dynamic Form</h1>
+<form [formGroup]="dynamicForm" (ngSubmit)="submitForm()">
+  <div class="border rounded border-gray-900/10 m-5 p-5">
+    <div class="grid gap-6 mb-6 md:grid-cols-2">
+      <div>
+        <label
+          for="name"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Name</label
+        >
+
+        <input
+          formControlName="name"
+          type="text"
+          id="name"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label
+          for="email"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Email:</label
+        >
+        <input
+          id="email"
+          formControlName="email"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
+
+      <div formArrayName="fields">
+        @for(field of fields.controls; let i = $index; track field) {
+        <div [formGroupName]="i">
+          <label>
+            Label:
+            <input formControlName="label" />
+          </label>
+          <label>
+            Value:
+            <input formControlName="value" />
+          </label>
+          <button type="button" (click)="removeField(i)">Remove</button>
+        </div>
+        }
+      </div>
+
+      <button type="button" (click)="addField()">Add Field</button>
+      <button type="submit">Submit</button>
+    </div>
+  </div>
+</form> -->

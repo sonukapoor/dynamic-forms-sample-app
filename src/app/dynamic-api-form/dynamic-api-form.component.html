@@ -1,0 +1,78 @@
+@if(dynamicForm) {
+<form [formGroup]="dynamicForm" (ngSubmit)="submitForm()">
+  <div class="m-5">
+    <div class="border border-gray-900/10 p-12">
+      <h2 class="text-base/7 font-semibold text-gray-900">
+        Dynamic Form from an API Call
+      </h2>
+      <p class="mt-1 text-sm/6 text-gray-600">
+        This form will generate fields from a JSON that is returned from an API
+        call.
+      </p>
+
+      <div class="mt-10">
+        @for(field of formConfig.fields; track field) {
+        <div class="mt-4">
+          <label
+            for="label"
+            class="block text-sm/6 font-medium text-gray-900"
+            >{{ field.label }}</label
+          >
+          <div
+            class="flex items-center rounded-md bg-white pl-3 outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
+          >
+            @switch(field.type) { @case('text') {
+            <input
+              [formControlName]="field.label"
+              type="text"
+              name="label"
+              id="label"
+              class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+            />
+            } @case('number') {
+            <input
+              [formControlName]="field.label"
+              type="number"
+              name="label"
+              id="label"
+              class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+            />
+            } @case('select') {
+            <select
+              [formControlName]="field.label"
+              name="label"
+              id="label"
+              class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+            >
+              @for(option of field.options; track option) {
+              <option [value]="option">
+                {{ option }}
+              </option>
+              }
+            </select>
+
+            @if(dynamicForm.get(field.label)?.invalid &&
+            dynamicForm.get(field.label)?.touched &&
+            dynamicForm.get(field.label)?.hasError('required')) {
+            <div>
+              <small> {{ field.label }} is required. </small>
+            </div>
+            } } }
+          </div>
+        </div>
+        }
+
+        <div class="mt-6 flex items-center justify-end gap-x-6">
+          <button
+            [disabled]="dynamicForm.invalid"
+            type="submit"
+            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+}
